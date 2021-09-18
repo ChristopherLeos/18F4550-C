@@ -1,0 +1,31 @@
+#include <18F4550.h>
+#fuses XT,NOWDT,NOPROTECT,PUT
+#use delay(clock=20Mhz, crystal)
+#use fast_io(c)         //Puerto C activo
+#BYTE OPTION_REG = 0X81 //Puerto B activo
+
+#define R PIN_C4   
+void main()
+{
+setup_adc(ADC_OFF);
+setup_adc_ports(NO_ANALOGS);
+set_tris_c(0x00);
+output_c(0b00000000);
+   while(TRUE){
+   output_HIGH(PIN_C1); //Inicia el verde
+   delay_ms(3000);      //Se mantiene por 3 segundos
+   output_low(PIN_C1);  //Se apaga el verde
+   
+   output_HIGH(PIN_C2); //Se enciende el amarillo
+   delay_ms(2000);      //Se mantiene por 2 segundos
+   output_LOW(PIN_C2);  //Se apaga el amarillo
+   
+   output_HIGH(R); //Se enciende el rojo
+   delay_ms(5000);      //Se mantiene por  5 segundos
+   output_LOW(R);  //Se apaga el rojo
+   }
+}
+  
+  
+   
+   
