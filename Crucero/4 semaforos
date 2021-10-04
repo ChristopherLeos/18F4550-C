@@ -1,0 +1,167 @@
+//Miguel Angel Quiñones, Christopher Leos, César Lailson, Josué Capetillo 24-09-21 ELE06A
+//Practica 4 Semaforo Cruce
+#include <18f4550.h>             //Configuramos nuestro pic, librerias, frecuencia de reloj, puertos a usar, etc.
+#fuses XT,NOWDT, NOPROTECT,PUT
+#use delay(clock=20Mhz,crystal)
+#use fast_io(b)
+#use fast_io(d)
+#use fast_io(c)
+#BYTE OPTION_REG= 0x81
+#build(reset=0x2000,interrupt=0x02008)
+#org 0x0000, 0x1FFF{}
+int i,j,k,l;
+
+#define R1 PIN_B0       //Definimos los pines a utilizar con un nombre deseado
+#define Y1 PIN_B1
+#define G1 PIN_B2
+#define R2 PIN_B3
+#define Y2 PIN_B4
+#define G2 PIN_B5
+#define R3 PIN_C1
+#define Y3 PIN_C2
+#define G3 PIN_C7
+#define R4 PIN_D1
+#define Y4 PIN_D2
+#define G4 PIN_D3
+
+void main(){                  //Comenzamos con el codigo principal configurando los puertos para no recibir señales analogicas
+setup_adc(ADC_OFF);
+setup_adc_ports(NO_ANALOGS);
+set_tris_b(0b00000000);
+set_tris_d(0b00000000);
+set_tris_c(0b00000000);
+output_b(0b00000000);
+output_d(0b00000000);
+output_c(0b00000000);
+do {
+   output_LOW(R1);                  //Se lleva a cabo el proceso deseado que es un cruce de 4 semaforos.
+   output_LOW(Y1);
+   output_HIGH(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(3000);
+   for (i=0; i<=3;i++){
+      output_LOW(G1);
+      delay_ms(500);
+      output_HIGH(G1);
+      delay_ms(500);
+   }
+   output_LOW(R1);
+   output_HIGH(Y1);
+   output_LOW(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(1000);
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_LOW(R2);
+   output_LOW(Y2);
+   output_HIGH(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(3000);
+   for(j=0; j<=3; j++){
+      output_LOW(G2);
+      delay_ms(500);
+      output_HIGH(G2);
+      delay_ms(500);
+   }
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_LOW(R2);
+   output_HIGH(Y2);
+   output_LOW(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(1000);
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_LOW(R3);
+   output_LOW(Y3);
+   output_HIGH(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(3000);
+   for(k=0; k<=3; k++){
+      output_LOW(G3);
+      delay_ms(500);
+      output_HIGH(G3);
+      delay_ms(500);
+   }
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_LOW(R3);
+   output_HIGH(Y3);
+   output_LOW(G3);
+   output_HIGH(R4);
+   output_LOW(Y4);
+   output_LOW(G4);
+   delay_ms(1000);
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_LOW(R4);
+   output_LOW(Y4);
+   output_HIGH(G4);
+   delay_ms(3000);
+   for(l=0; l<=3;l++){
+      output_LOW(G4);
+      delay_ms(500);
+      output_HIGH(G4);
+      delay_ms(500);
+   }
+   output_HIGH(R1);
+   output_LOW(Y1);
+   output_LOW(G1);
+   output_HIGH(R2);
+   output_LOW(Y2);
+   output_LOW(G2);
+   output_HIGH(R3);
+   output_LOW(Y3);
+   output_LOW(G3);
+   output_LOW(R4);
+   output_HIGH(Y4);
+   output_LOW(G4);
+   delay_ms(1000);
+}
+while(TRUE);         //Se pone la condicion para que el codigo se repita indefinidamente.
+}
