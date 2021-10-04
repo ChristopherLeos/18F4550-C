@@ -1,0 +1,42 @@
+//Miguel Angel Quiñones, Christopher Leos, César Lailson, Josué Capetillo 24-09-21 ELE06A
+//Practica 3 Semaforo
+#include <18f4550.h>
+#fuses XT,NOWDT, NOPROTECT,PUT
+#use delay(clock=20Mhz,crystal)
+#use fast_io(b)
+#BYTE OPTION_REG= 0x81
+#build(reset=0x2000,interrupt=0x02008)
+#org 0x0000, 0x1FFF{}
+
+int i;
+void main(){
+setup_adc(ADC_OFF);
+setup_adc_ports(NO_ANALOGS);
+set_tris_b(0b00000000);
+output_b(0b00000000);
+do {
+output_LOW(PIN_B0);
+output_LOW(PIN_B1);
+output_HIGH(PIN_B2);
+delay_ms(3000);
+for(i=0; i<=3; i++){
+   output_LOW(PIN_B0);
+   output_LOW(PIN_B1);
+   output_LOW(PIN_B2);
+   delay_ms(1000);
+   output_LOW(PIN_B0);
+   output_LOW(PIN_B1);
+   output_HIGH(PIN_B2);
+   delay_ms(1000);
+}
+output_LOW(PIN_B0);
+output_HIGH(PIN_B1);
+output_LOW(PIN_B2);
+delay_ms(1000);
+output_HIGH(PIN_B0);
+output_LOW(PIN_B1);
+output_LOW(PIN_B2);
+delay_ms(4000);
+}
+while(TRUE);
+}
