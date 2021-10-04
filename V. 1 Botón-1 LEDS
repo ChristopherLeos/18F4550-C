@@ -1,0 +1,22 @@
+//CLC-3/10/2021//
+#include <18f4550.h>
+#fuses XT,NOWDT, NOPROTECT,PUT
+#use delay(clock=20Mhz,crystal)
+#use fast_io(b)
+#use fast_io(c)
+#BYTE OPTION_REG= 0x81
+#build(reset=0x2000,interrupt=0x02008)
+#org 0x0000, 0x1FFF{}
+
+
+void main(){
+set_tris_B(0B11100000);
+while(1){
+   if(INPUT(PIN_B0)==1){
+      OUTPUT_high(PIN_C0); }
+   else{
+      output_low(PIN_C0);}
+
+}
+}
+
